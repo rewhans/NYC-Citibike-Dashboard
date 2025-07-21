@@ -42,7 +42,7 @@ page = st.sidebar.selectbox("Choose a page:", [
     "Recommendations"
 ])
 st.sidebar.markdown("---")
-st.sidebar.info("Explore usage trends, hotspots, and optimization strategies.")
+st.sidebar.info("Explore trends, hotspots, and performance recommendations for optimizing Citi Bike operations.")
 
 # ----------------------------------
 # Page 1: Introduction
@@ -97,7 +97,8 @@ elif page == "Daily Trends & Weather Analysis":
 )
 
     fig.update_yaxes(title_text="Max Temperature (°F)", secondary_y=True)
-    st.plotly_chart(fig)
+    st.plotly_chart(fig, use_container_width=True)
+
 
     
     st.subheader("Interpretation")
