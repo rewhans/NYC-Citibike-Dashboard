@@ -23,7 +23,6 @@ st.set_page_config(
 def load_data(path):
     df = pd.read_csv(path)
     df['started_at'] = pd.to_datetime(df['started_at'])
-    df['ended_at'] = pd.to_datetime(df['ended_at'])
     df['start_hour'] = df['started_at'].dt.hour
     return df
 
