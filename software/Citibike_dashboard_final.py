@@ -66,11 +66,12 @@ if page == "Introduction":
 elif page == "Daily Trends & Weather Analysis":
     st.title("Daily Trip Trends")
 
-    # Group by date to get the count of trips
-    daily_trips = df.groupby('date').size().reset_index(name='trip_count')
+    # Group by the date part of the 'started_at' column
+    daily_trips = df.groupby(df['started_at'].dt.date).size().reset_index(name='trip_count')
+    daily_trips = daily_trips.rename(columns={'started_at': 'date'}) # Rename for plotting
     daily_trips['date'] = pd.to_datetime(daily_trips['date'])
     
-    # Filter for 2022 if needed, or remove if your data spans other years
+    # Filter for 2022 if needed
     daily_trips_2022 = daily_trips[daily_trips['date'].dt.year == 2022]
 
     # Create a simple line chart for trip counts
