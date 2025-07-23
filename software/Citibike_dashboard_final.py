@@ -140,10 +140,10 @@ elif page == "Trip Flow Map":
     st.write("Visualizing NYC trip flows with Kepler.gl")
 
     try:
-        with open("software/citibike_arc_map_2022.html", "r", encoding="utf-8") as f:
+        with open("software/citibike_arc_map_base.html", "r", encoding="utf-8") as f:
             st.components.v1.html(f.read(), height=600)
     except FileNotFoundError:
-        st.error("❌ Map file not found. Please add 'citibike_arc_map_2022.html' to this folder.")
+        st.error("❌ Map file not found. Please add 'citibike_arc_map_base.html' to this folder.")
 
     st.subheader("Interpretation")
     st.markdown("""
