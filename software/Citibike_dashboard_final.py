@@ -62,50 +62,38 @@ if page == "Introduction":
     """)
 
 # ----------------------------------
-# Page 2: Daily Trends & Weather
+# Page 2: Daily Trends
 # ----------------------------------
 elif page == "Daily Trends & Weather Analysis":
-    st.title("Daily Trends & Weather Analysis")
+    st.title("Daily Trip Trends")
 
+    # Group by date to get the count of trips
     daily_trips = df.groupby('date').size().reset_index(name='trip_count')
-    weather_daily = df.groupby('date')['TMAX'].mean().reset_index()
-    merged = pd.merge(daily_trips, weather_daily, on='date')
-    merged['date'] = pd.to_datetime(merged['date'])
+    daily_trips['date'] = pd.to_datetime(daily_trips['date'])
+    
+    # Filter for 2022 if needed, or remove if your data spans other years
+    daily_trips_2022 = daily_trips[daily_trips['date'].dt.year == 2022]
 
-    # Filter for 2022 only
-    merged['date'] = pd.to_datetime(merged['date'])
-    merged_2022 = merged[merged['date'].dt.year == 2022]
-
-    fig = make_subplots(specs=[[{"secondary_y": True}]])
-
-    fig.add_trace(
-        go.Scatter(x=merged_2022['date'], y=merged_2022['trip_count'], name='Trip Count',
-                   mode='lines', line=dict(color='blue')),
-        secondary_y=False,
-)
-
-    fig.add_trace(
-        go.Scatter(x=merged_2022['date'], y=merged_2022['TMAX'], name='Max Temp (°F)',
-                   mode='lines', line=dict(color='red')),
-        secondary_y=True,
-)
+    # Create a simple line chart for trip counts
+    fig = px.line(
+        daily_trips_2022, 
+        x='date', 
+        y='trip_count', 
+        title="Daily Citi Bike Trips (2022)"
+    )
 
     fig.update_layout(
-        title="Daily Citi Bike Trips vs. Max Temperature (2022)",
         xaxis_title="Date",
-        yaxis_title="Trip Count",
-)
-
-    fig.update_yaxes(title_text="Max Temperature (°F)", secondary_y=True)
+        yaxis_title="Total Trip Count"
+    )
+    
     st.plotly_chart(fig, use_container_width=True)
-
-
     
     st.subheader("Interpretation")
     st.markdown("""
-    - Ridership increases with warmer weather.
-    - Highest usage appears during summer months.
-    - Suggests opportunity to **scale down fleet in winter**.
+    - This chart displays the daily volume of trips throughout the year.
+    - Clear seasonal patterns are visible, with ridership peaking in warmer months.
+    - This data supports the recommendation to **scale the fleet seasonally**.
     """)
 
 # ----------------------------------
