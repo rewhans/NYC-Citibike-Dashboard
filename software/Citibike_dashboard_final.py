@@ -61,39 +61,53 @@ if page == "Introduction":
     """)
 
 # ----------------------------------
-# Page 2: Daily Trends
+# Page 2: Daily Trends & Weather Analysis
 # ----------------------------------
 elif page == "Daily Trends & Weather Analysis":
-    st.title("Daily Trip Trends")
+    st.title("Daily Trends & Weather Analysis")
 
-    # Group by the date part of the 'started_at' column
-    daily_trips = df.groupby(df['started_at'].dt.date).size().reset_index(name='trip_count')
-    daily_trips = daily_trips.rename(columns={'started_at': 'date'}) # Rename for plotting
-    daily_trips['date'] = pd.to_datetime(daily_trips['date'])
-    
-    # Filter for 2022 if needed
-    daily_trips_2022 = daily_trips[daily_trips['date'].dt.year == 2022]
+    # Ensure data is from 2022 and has a date column for grouping
+    df['date'] = pd.to_datetime(df['started_at']).dt.date
+    df_2022 = df[pd.to_datetime(df['date']).dt.year == 2022]
 
-    # Create a simple line chart for trip counts
-    fig = px.line(
-        daily_trips_2022, 
-        x='date', 
-        y='trip_count', 
-        title="Daily Citi Bike Trips (2022)"
+    # Group by date to get trip count and average max temperature
+    daily_trips = df_2022.groupby('date').size().reset_index(name='trip_count')
+    daily_weather = df_2022.groupby('date')[['TMAX']].mean().reset_index()
+
+    # Merge the two dataframes for plotting
+    merged = pd.merge(daily_trips, daily_weather, on='date')
+
+    # Create subplot with a secondary Y-axis
+    fig = make_subplots(specs=[[{"secondary_y": True}]])
+
+    # Add Trip Count line
+    fig.add_trace(
+        go.Scatter(x=merged['date'], y=merged['trip_count'],
+                   name='Trip Count', mode='lines', line=dict(color='blue')),
+        secondary_y=False
     )
 
+    # Add Max Temperature line
+    fig.add_trace(
+        go.Scatter(x=merged['date'], y=merged['TMAX'],
+                   name='Max Temp (°F)', mode='lines', line=dict(color='red')),
+        secondary_y=True
+    )
+
+    # Update layout and axis titles
     fig.update_layout(
-        xaxis_title="Date",
-        yaxis_title="Total Trip Count"
+        title_text="Daily Citi Bike Trips vs. Max Temperature (2022)",
+        xaxis_title="Date"
     )
-    
+    fig.update_yaxes(title_text="Trip Count", secondary_y=False)
+    fig.update_yaxes(title_text="Max Temperature (°F)", secondary_y=True)
+
     st.plotly_chart(fig, use_container_width=True)
-    
+
     st.subheader("Interpretation")
     st.markdown("""
-    - This chart displays the daily volume of trips throughout the year.
-    - Clear seasonal patterns are visible, with ridership peaking in warmer months.
-    - This data supports the recommendation to **scale the fleet seasonally**.
+    - Ridership clearly increases with warmer weather, peaking during summer months.
+    - This strong correlation suggests an opportunity to **scale down the fleet in winter** to match lower demand and reduce operational costs.
     """)
 
 # ----------------------------------
