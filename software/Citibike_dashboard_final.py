@@ -26,7 +26,7 @@ def load_data(path):
     df['start_hour'] = df['started_at'].dt.hour
     return df
 
-df = load_data("software/top_100_routes_with_date.csv")
+df = load_data("software/citibike_dashboard_sample.csv")
 
 # ----------------------------------
 # Sidebar Navigation
