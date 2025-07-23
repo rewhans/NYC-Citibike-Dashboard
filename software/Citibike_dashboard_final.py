@@ -27,7 +27,7 @@ def load_data(path):
     df['start_hour'] = df['started_at'].dt.hour
     return df
 
-df = load_data("citibike_trips_2022_sample.csv")
+df = load_data("software/citibike_trips_2022_sample.csv")
 
 # ----------------------------------
 # Sidebar Navigation
@@ -138,7 +138,7 @@ elif page == "Trip Flow Map":
     st.write("Visualizing NYC trip flows with Kepler.gl")
 
     try:
-        with open("citibike_arc_map_2022.html", "r", encoding="utf-8") as f:
+        with open("software/citibike_arc_map_2022.html", "r", encoding="utf-8") as f:
             st.components.v1.html(f.read(), height=600)
     except FileNotFoundError:
         st.error("❌ Map file not found. Please add 'citibike_arc_map_2022.html' to this folder.")
