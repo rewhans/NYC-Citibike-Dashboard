@@ -2,7 +2,7 @@
 
 Interactive Streamlit dashboard analyzing 2022 Citi Bike usage in New York City, enriched with NOAA daily weather data, to help a strategy team plan fleet size, dock capacity, and bike rebalancing.
 
-**Live dashboard:** [nyc-citibike-dashboard.streamlit.app](https://nyc-citibike-dashboard-6fgbejampcc6jh2pxt3fj4.streamlit.app/)
+**Live dashboard:** [nyc-citibike-dashboard.streamlit.app](https://nyc-citibike-dashboard.streamlit.app/)
 
 **Skills demonstrated:** API data sourcing (NOAA), data merging and cleaning with pandas, visualization with Matplotlib, Seaborn, and Plotly, geospatial mapping with Kepler.gl, Streamlit app development and deployment.
 
