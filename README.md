@@ -33,7 +33,7 @@ Give a NYC strategy team actionable insights on:
 
 ## Dataset
 
-- **Citi Bike trip data, 2022** (public): a random sample of 25,000 trips (`software/citibike_dashboard_sample.csv`), sized for fast web deployment. Columns include trip start and end times, station names and coordinates, and member type.
+- **Citi Bike trip data, 2022** (public): a random sample of 25,000 trips (`02_Data/citibike_dashboard_sample.csv`), sized for fast web deployment. Columns include trip start and end times, station names and coordinates, and member type.
 - **NOAA weather data**, pulled through the NOAA API (notebook 2.2): daily maximum temperature (`TMAX`), minimum temperature (`TMIN`), and precipitation (`PRCP`), merged with trips by date.
 
 ## Dashboard Pages
@@ -59,9 +59,9 @@ Give a NYC strategy team actionable insights on:
 
 ## Screenshots
 
-![Dashboard screenshot 1](screenshots/dashboard_screenshot_1.PNG)
-![Dashboard screenshot 2](screenshots/dashboard_screenshot_2.PNG)
-![Dashboard screenshot 3](screenshots/dashboard_screenshot_3.PNG)
+![Dashboard screenshot 1](<04_Analysis/04.03_Visualizations/dashboard_screenshot_1.PNG>)
+![Dashboard screenshot 2](<04_Analysis/04.03_Visualizations/dashboard_screenshot_2.PNG>)
+![Dashboard screenshot 3](<04_Analysis/04.03_Visualizations/dashboard_screenshot_3.PNG>)
 
 ## Limitations
 
@@ -80,7 +80,7 @@ pip install -r requirements.txt
 Run the app locally from the repo root (the app reads its data with paths relative to the root):
 
 ```bash
-streamlit run software/Citibike_dashboard_final.py
+streamlit run 03_Scripts/Citibike_dashboard_final.py
 ```
 
 ## Tools
@@ -89,20 +89,22 @@ Python (pandas) · Plotly · Matplotlib · Seaborn · Streamlit · Kepler.gl · 
 
 ## Folder Structure
 
-This repo keeps the layout the live Streamlit app expects: the app loads its data and map file by relative path from `software/`, so the folders stay as they are.
+Numbered folders follow the same layout as my other projects. The Streamlit app reads its data and map from `02_Data/` by path relative to the repo root.
 
 ```
 .
 ├── README.md
 ├── requirements.txt
-├── .devcontainer/        (dev container configuration)
-├── documentation/        (CareerFoundry project brief)
-├── notebooks/            (Achievement 2.2 to 2.6 notebooks)
-├── screenshots/          (dashboard screenshots)
-└── software/
-    ├── Citibike_dashboard_final.py     (Streamlit app)
-    ├── citibike_dashboard_sample.csv   (25,000-trip sample with weather)
-    └── citibike_arc_map_base.html      (Kepler.gl map export)
+├── .devcontainer/                      (dev container configuration)
+├── 01_Project Management/              (CareerFoundry project brief)
+├── 02_Data/
+│   ├── citibike_dashboard_sample.csv   (25,000-trip sample with weather)
+│   └── citibike_arc_map_base.html      (Kepler.gl map export)
+├── 03_Scripts/
+│   ├── Citibike_dashboard_final.py     (Streamlit app)
+│   └── Achievement 2.2 to 2.6 notebooks
+└── 04_Analysis/
+    └── 04.03_Visualizations/           (dashboard screenshots)
 ```
 
 ## Author
